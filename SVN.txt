@@ -1,0 +1,55 @@
+
+Steps to create a subversion in Lunix-Ubuntu
+
+
+
+step1: To install subversion 
+	sudo apt-get install subversion
+
+step2: Install tree
+	sudo apt-get install tree
+
+step3: Create a Repository
+
+	3.1: Make a Directory for SVN 
+		sudo mkdir svnrepo
+
+	3.2: create Repo with svnadmin
+		sudo svnadmin create svnrepo
+
+step4: Add user to read and write
+	
+	4.1: edit configuration file svnserve.conf
+		sudo gedit svnrepo/conf/svnserve.conf
+	
+	4.2: create Usre and password...
+		sudo gedit svnrepo/conf/passwd
+
+step5: create user Group
+	sudo groupadd svngroup
+
+step6: Create user and its group
+	sudo useradd svnfadi -g svngroup
+
+step7: set password for the user "svnfadi"
+	sudo passwd svnfadi
+
+step8: Change the owner of the repository
+	sudo chown -R svnfadi:svngroup svnrepo
+
+step9: change permission for repository
+	sudo chmod -R 770 svnrepo
+
+step10: check permissions
+	sudo tree -C -A -p -u  -g svnrepo
+
+step11: Execute SVN service
+	sudo -u svnfadi svnserve -d -r svnrepo
+
+step12: Check if it is running
+	sudo apt install net-tools
+	netstat -l -t -p | grep -e PID -e svn
+
+
+
+
